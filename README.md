@@ -9,20 +9,15 @@ It’s meant to be used with the **experimental HTTP/HTTPS VFS support** propose
 From the repo root:
 
 ```sh
-Rscript scripts/build-mtcars-sqlite.R docs docs/mtcars.sqlite
+Rscript scripts/build-mtcars-sqlite.R docs docs/mtcars.sqlite docs/mtcars.sqlite.sha256
 ```
 
 This creates:
 
 - `docs/mtcars.sqlite`
+- `docs/mtcars.sqlite.sha256` (requires the `openssl` R package)
 
-Optionally also create a checksum:
-
-```sh
-sha256sum docs/mtcars.sqlite > docs/mtcars.sqlite.sha256
-```
-
-(Windows PowerShell alternative shown below.)
+If you don’t want the extra R dependency, you can still create the checksum manually (see below).
 
 ## 2) Enable GitHub Pages
 
@@ -67,6 +62,20 @@ dbDisconnect(con)
 
 - This relies on the host supporting HTTP **Range requests**. GitHub Pages generally does.
 - This is **read-only** by design.
+
+If you want to sanity-check that your published URL supports range requests, you should see an `Accept-Ranges: bytes` header:
+
+```sh
+curl -I https://<user>.github.io/<repo>/mtcars.sqlite
+```
+
+## Manual checksum commands (optional)
+
+### Linux/macOS
+
+```sh
+sha256sum docs/mtcars.sqlite > docs/mtcars.sqlite.sha256
+```
 
 ## PowerShell checksum command
 

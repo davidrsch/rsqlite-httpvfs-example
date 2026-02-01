@@ -7,10 +7,27 @@
 </head>
 <body>
   <h1>mtcars.sqlite</h1>
-  <p>This repository hosts a small SQLite database file for HTTP read-only demos.</p>
+  <p>This GitHub Pages site hosts a small SQLite database file for HTTP read-only demos (RSQLite HTTP VFS).</p>
   <ul>
     <li><a href="mtcars.sqlite">mtcars.sqlite</a></li>
     <li><a href="mtcars.sqlite.sha256">mtcars.sqlite.sha256</a> (optional integrity check)</li>
   </ul>
+
+  <h2>Use from R</h2>
+  <p>Example (requires an RSQLite build with HTTP VFS support):</p>
+  <pre><code>library(DBI)
+library(RSQLite)
+
+url &lt;- "https://&lt;user&gt;.github.io/&lt;repo&gt;/mtcars.sqlite"
+
+stopifnot(sqliteHasHttpVFS())
+con &lt;- sqlite_remote(url)
+dbGetQuery(con, "SELECT COUNT(*) AS n FROM mtcars")
+dbDisconnect(con)
+</code></pre>
+
+  <p>
+    Repo/README: <a href="https://github.com/davidrsch/rsqlite-httpvfs-example">github.com/davidrsch/rsqlite-httpvfs-example</a>
+  </p>
 </body>
 </html>

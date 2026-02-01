@@ -3,3 +3,11 @@
 .Ruserdata
 .Rproj.user/
 .DS_Store
+
+# SQLite transient files
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# Optional RStudio project file
+*.Rproj
